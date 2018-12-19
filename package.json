@@ -1,0 +1,21 @@
+{
+  "name": "ci-utils",
+  "version": "0.0.0",
+  "description": "Utils for helping with CI",
+  "bin": "index.js",
+  "scripts": {
+    "test": "eslint ."
+  },
+  "keywords": [
+    "ci"
+  ],
+  "author": "Basalt <https://basalt.io>",
+  "license": "MIT",
+  "devDependencies": {
+    "@basalt/eslint-config-base": "^0.4.0"
+  },
+  "dependencies": {
+    "commander": "^2.19.0",
+    "node-fetch": "^2.3.0"
+  }
+}
