@@ -72,6 +72,7 @@ program
       .then(res => res.json())
       .then(results => {
         console.log(`GitHub status set to: ${results.state}`);
+        return true;
       });
   });
 
