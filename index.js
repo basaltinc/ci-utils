@@ -70,7 +70,9 @@ program
       },
     )
       .then(res => res.json())
-      .then(results => console.log(results));
+      .then(results => {
+        console.log(`GitHub status set to: ${results.state}`);
+      });
   });
 
 program.parse(process.argv);
