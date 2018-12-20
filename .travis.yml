@@ -14,12 +14,19 @@ jobs:
     - stage: use
       script:
         - node cli.js gh-status --url http://example.com -s success -c ci-utils/status -d 'body text'
+    - stage: release
+      script: skip
+      deploy:
+        provider: script
+        skip_cleanup: true
+        script:
+          - npx semantic-release
 
 stages:
   - test
   - use
-#  - name: deploy
-#    if: branch = master
+ - name: release
+   if: branch = master
 
 cache:
   - npm
