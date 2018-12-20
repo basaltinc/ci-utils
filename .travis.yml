@@ -6,5 +6,6 @@ install:
 - npm i
 
 script:
+- node index.js gh-status --url http://example.com -s pending -c ci-utils/status -d 'body text'
 - npm test
 - node index.js gh-status --url http://example.com -s success -c ci-utils/status -d 'body text'
