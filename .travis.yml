@@ -15,7 +15,6 @@ jobs:
     - stage: use
       script:
         - node cli.js gh-status --url http://example.com -s success -c ci-utils/status -d 'body text'
-        - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then node cli.js gh-comment --comment "Hello *world*" --issue $TRAVIS_PULL_REQUEST; fi
     - stage: release
       script: skip
       deploy:
