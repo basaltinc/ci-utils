@@ -1,11 +1,25 @@
 language: node_js
 node_js:
-- '10'
+- '8'
 
 install:
-- npm i
+  - npm install
 
-script:
-- node index.js gh-status --url http://example.com -s pending -c ci-utils/status -d 'body text'
-- npm test
-- node index.js gh-status --url http://example.com -s success -c ci-utils/status -d 'body text'
+jobs:
+  include:
+    - stage: test
+      script:
+        - npm test
+    - stage: use
+      script:
+        - node index.js gh-status --url http://example.com -s pending -c ci-utils/status -d 'body text'
+        - node index.js gh-status --url http://example.com -s success -c ci-utils/status -d 'body text'
+
+stages:
+  - test
+  - use
+#  - name: deploy
+#    if: branch = master
+
+cache:
+  - npm
