@@ -3,13 +3,6 @@ const program = require('commander');
 const { setGitHubStatus } = require('./lib');
 const { version } = require('./package.json');
 
-const { GITHUB_TOKEN } = process.env;
-
-if (!GITHUB_TOKEN) {
-  console.log('Missing env var: "GITHUB_TOKEN"');
-  process.exit(1);
-}
-
 program.version(version, '-v, --version');
 
 program
@@ -25,7 +18,6 @@ program
   .option('-d, --description [description]', 'Description')
   .action(cmd => {
     const { state, url, context, description } = cmd;
-    // console.log('gh-status', { state, url, context, description, gitShaLong });
     return setGitHubStatus({
       state,
       url,
