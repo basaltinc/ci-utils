@@ -2,7 +2,8 @@
   "name": "ci-utils",
   "version": "0.0.0",
   "description": "Utils for helping with CI",
-  "bin": "index.js",
+  "bin": "cli.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "eslint ."
   },
