@@ -1,3 +1,5 @@
+[![Greenkeeper badge](https://badges.greenkeeper.io/basaltinc/ci-utils.svg)](https://greenkeeper.io/)
+
 # Continuous Integration Utilities by [Basalt](https://basalt.io)
 
 Helps with common automation tasks helpful in CI builds and repo management. 
@@ -43,3 +45,4 @@ createGitHubComment('Hello *world', 123).then(results => {
 ```
 
 Most will not be documented in this readme, but should be pretty straightforward if you look in the `./lib` directory and at the exported functions and their JSdoc comments. All the CLI commands use these functions.
+
