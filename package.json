@@ -22,7 +22,6 @@
     "@semantic-release/release-notes-generator": "^7.1.4"
   },
   "dependencies": {
-    "commander": "^2.19.0",
-    "node-fetch": "^2.3.0"
+    "commander": "^2.19.0"
   }
 }
