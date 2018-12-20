@@ -15,7 +15,7 @@ jobs:
       script:
         - node cli.js gh-status --url http://example.com -s success -c ci-utils/status -d 'body text'
     - stage: release
-#      script: skip
+      script: skip
       deploy:
         provider: script
         skip_cleanup: true
@@ -25,8 +25,8 @@ jobs:
 stages:
   - test
   - use
- - name: release
-   if: branch = master
+  - name: release
+    if: branch = master
 
 cache:
   - npm
