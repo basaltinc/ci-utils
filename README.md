@@ -32,6 +32,12 @@ npx ci-utils gh-status --status success --url http://example.com --description "
 npx ci-utils gh-comment --comment "Hello *world*" --issue 123
 ```
 
+#### Create GitHub Release
+
+```bash
+npx ci-utils gh-release --tag "v1.2.3" --body "This release is *really* awesome" --target master
+```
+
 ### Node API
 
 All commands can be used in node.js as well; for example to create a GitHub issue:
