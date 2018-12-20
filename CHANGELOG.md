@@ -1,3 +1,10 @@
+# [0.2.0](https://github.com/basaltinc/ci-utils/compare/v0.1.1...v0.2.0) (2018-12-20)
+
+
+### Features
+
+* add github-comment util ([#4](https://github.com/basaltinc/ci-utils/issues/4)) ([edfb1b7](https://github.com/basaltinc/ci-utils/commit/edfb1b7))
+
 ## [0.1.1](https://github.com/basaltinc/ci-utils/compare/v0.1.0...v0.1.1) (2018-12-20)
 
 
