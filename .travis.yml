@@ -4,6 +4,7 @@ node_js:
 
 install:
   - npm install
+  - node index.js gh-status --url http://example.com -s pending -c ci-utils/status -d 'body text'
 
 jobs:
   include:
@@ -12,7 +13,6 @@ jobs:
         - npm test
     - stage: use
       script:
-        - node index.js gh-status --url http://example.com -s pending -c ci-utils/status -d 'body text'
         - node index.js gh-status --url http://example.com -s success -c ci-utils/status -d 'body text'
 
 stages:
