@@ -9,12 +9,13 @@ install:
 jobs:
   include:
     - stage: test
-      script:
-        - npm test
+      install: skip
+      script: npm test
     - stage: use
-      script:
-        - node cli.js gh-status --url http://example.com -s success -c ci-utils/status -d 'body text'
+      install: skip
+      script: node cli.js gh-status --url http://example.com -s success -c ci-utils/status -d 'body text'
     - stage: release
+      install: skip
       script: skip
       deploy:
         provider: script
