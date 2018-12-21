@@ -1,3 +1,15 @@
+# [0.5.0](https://github.com/basaltinc/ci-utils/compare/v0.4.1...v0.5.0) (2018-12-21)
+
+
+### Bug Fixes
+
+* exporting getGitSha ([ce23a50](https://github.com/basaltinc/ci-utils/commit/ce23a50))
+
+
+### Features
+
+* adding shell command execs ([f4008a9](https://github.com/basaltinc/ci-utils/commit/f4008a9))
+
 ## [0.4.1](https://github.com/basaltinc/ci-utils/compare/v0.4.0...v0.4.1) (2018-12-21)
 
 
