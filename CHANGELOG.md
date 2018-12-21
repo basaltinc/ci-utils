@@ -1,3 +1,11 @@
+# [0.4.0](https://github.com/basaltinc/ci-utils/compare/v0.3.0...v0.4.0) (2018-12-21)
+
+
+### Features
+
+* add banner command ([491ba23](https://github.com/basaltinc/ci-utils/commit/491ba23))
+* add parseChangelog util ([1b64848](https://github.com/basaltinc/ci-utils/commit/1b64848))
+
 # [0.3.0](https://github.com/basaltinc/ci-utils/compare/v0.2.0...v0.3.0) (2018-12-20)
 
 
