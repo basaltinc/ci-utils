@@ -1,3 +1,15 @@
+# [0.3.0](https://github.com/basaltinc/ci-utils/compare/v0.2.0...v0.3.0) (2018-12-20)
+
+
+### Features
+
+* add create GitHub release ([bbcd505](https://github.com/basaltinc/ci-utils/commit/bbcd505))
+
+
+### Performance Improvements
+
+* removing node-fetch ([#5](https://github.com/basaltinc/ci-utils/issues/5)) ([2ac54c6](https://github.com/basaltinc/ci-utils/commit/2ac54c6))
+
 # [0.2.0](https://github.com/basaltinc/ci-utils/compare/v0.1.1...v0.2.0) (2018-12-20)
 
 
