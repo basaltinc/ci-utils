@@ -63,4 +63,15 @@ program
     });
   });
 
+program.command('banner <text>').action(text => {
+  console.log(`
+
+|======================
+|
+|  ${text}
+|
+|======================
+      `);
+});
+
 program.parse(process.argv);

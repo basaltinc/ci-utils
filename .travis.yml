@@ -4,6 +4,7 @@ node_js:
 
 install:
   - npm install
+  - node cli.js banner "I'm a banner!"
 
 jobs:
   include:

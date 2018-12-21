@@ -38,6 +38,19 @@ npx ci-utils gh-comment --comment "Hello *world*" --issue 123
 npx ci-utils gh-release --tag "v1.2.3" --body "This release is *really* awesome" --target master
 ```
 
+#### Banner
+
+```bash
+npx ci-utils banner "I'm a banner"
+
+
+|======================
+|
+|  I'm a banner
+|
+|======================
+```
+
 ### Node API
 
 All commands can be used in node.js as well; for example to create a GitHub issue:
