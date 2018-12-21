@@ -4,6 +4,7 @@ const {
   setGitHubStatus,
   createGitHubComment,
   createGitHubRelease,
+  outputBanner,
 } = require('./lib');
 const { version } = require('./package.json');
 
@@ -63,15 +64,6 @@ program
     });
   });
 
-program.command('banner <text>').action(text => {
-  console.log(`
-
-|======================
-|
-|  ${text}
-|
-|======================
-      `);
-});
+program.command('banner <text>').action(text => outputBanner(text));
 
 program.parse(process.argv);
