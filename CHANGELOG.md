@@ -1,3 +1,10 @@
+## [0.4.1](https://github.com/basaltinc/ci-utils/compare/v0.4.0...v0.4.1) (2018-12-21)
+
+
+### Bug Fixes
+
+* make outputBanner a function too ([4a3cbb0](https://github.com/basaltinc/ci-utils/commit/4a3cbb0))
+
 # [0.4.0](https://github.com/basaltinc/ci-utils/compare/v0.3.0...v0.4.0) (2018-12-21)
 
 
