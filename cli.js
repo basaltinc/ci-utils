@@ -12,6 +12,9 @@ program.version(version, '-v, --version');
 
 program
   .command('gh-status')
+  .description(
+    "Sets GitHub commit for last commit to that status. PR's show last commit's status.",
+  )
   .option(
     '-s, --state [state]',
     'State [pending|error|failure|success]',
@@ -36,6 +39,7 @@ program
 
 program
   .command('gh-comment')
+  .description('Add comment to GitHub issue/pr')
   .option('-c, --comment [comment]', 'Comment; markdown ok')
   .option('-i, --issue [issue]', 'GitHub issue/PR id number', parseInt)
   .action(cmd => {
@@ -48,6 +52,7 @@ program
 
 program
   .command('gh-release')
+  .description('Create GitHub release from tag')
   .option('-t, --tag [tag]', 'Tag')
   .option('-b, --body [body]', 'Body; Markdown ok')
   .option(
@@ -64,6 +69,11 @@ program
     });
   });
 
-program.command('banner <text>').action(text => outputBanner(text));
+program
+  .command('banner <text>')
+  .description(
+    'Output banner of text in cli; useful for helping with CI log readability',
+  )
+  .action(text => outputBanner(text));
 
 program.parse(process.argv);

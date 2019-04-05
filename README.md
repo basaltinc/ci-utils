@@ -2,7 +2,7 @@
 
 # Continuous Integration Utilities by [Basalt](https://basalt.io)
 
-Helps with common automation tasks helpful in CI builds and repo management. 
+Helps with common automation tasks helpful in CI builds and repo management.
 
 ## Usage
 
@@ -12,7 +12,9 @@ We try to have as much set up through environmental variables as possible. These
 
 - `GITHUB_TOKEN`
 
-Additionally we're going to assume you're using Travis and have their env vars. More CIs and generic ways to set things will get fleshed out, but want to get the experience right first. 
+Additionally we're going to assume you're using Travis and have their env vars. More CIs and generic ways to set things will get fleshed out, but want to get the experience right first. If it's not Travis CI, please set these env vars:
+
+- `REPO_SLUG` i.e. `user/repo`
 
 ### Commands
 
@@ -20,7 +22,7 @@ Will all, it's really best to run `npx ci-utils <command> --help`. Most common c
 
 #### Set GitHub Commit Status
 
-Sets GitHub commit for last commit to that status. PR's show last commit's status. 
+Sets GitHub commit for last commit to that status. PR's show last commit's status.
 
 ```bash
 npx ci-utils gh-status --status success --url http://example.com --description "It worked!!" --context "my-app/test"
