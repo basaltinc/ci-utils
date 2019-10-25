@@ -25,7 +25,7 @@ Will all, it's really best to run `npx ci-utils <command> --help`. Most common c
 Sets GitHub commit for last commit to that status. PR's show last commit's status.
 
 ```bash
-npx ci-utils gh-status --status success --url http://example.com --description "It worked!!" --context "my-app/test"
+npx ci-utils gh-status --state success --url http://example.com --description "It worked!!" --context "my-app/test"
 ```
 
 #### Create GitHub Issue/PR Comment
