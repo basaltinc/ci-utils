@@ -10,33 +10,31 @@ env:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [8.x, 10.x]
+        node-version: [10.x, 12.x]
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm ci
-    - run: npm run build --if-present
-    - name: Tests
-      run: |
-        node cli.js banner "I'm a banner!"
-        node cli.js gh-status --url http://example.com -s pending -c ci-utils/lint -d 'lint started'
-        npm test
-        node cli.js gh-status --url http://example.com -s success -c ci-utils/lint -d 'lint ok'
-        node cli.js gh-status --url http://example.com -s success -c ci-utils/status -d 'body text'
-    - name: Release
-      if: github.ref == 'master'
-      run: |
-        echo "The branch is ${{ github.ref }}"
-        npx semantic-release
-      env: 
-        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: yarn
+      - run: yarn build
+      - name: Tests
+        run: |
+          node ./dist/cli.js banner "I'm a banner!"
+          node ./dist/cli.js gh-status --url http://example.com -s pending -c ci-utils/lint -d 'lint started'
+          npm test
+          node ./dist/cli.js gh-status --url http://example.com -s success -c ci-utils/lint -d 'lint ok'
+          node ./dist/cli.js gh-status --url http://example.com -s success -c ci-utils/status -d 'body text'
+      - name: Release
+        if: github.ref == 'master'
+        run: |
+          echo "The branch is ${{ github.ref }}"
+          npx semantic-release
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
