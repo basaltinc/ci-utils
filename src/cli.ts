@@ -1,12 +1,13 @@
 #!/usr/bin/env node
-const program = require('commander');
-const {
-  setGitHubStatus,
-  createGitHubComment,
-  createGitHubRelease,
-  outputBanner,
-} = require('./lib');
-const { version } = require('./package.json');
+import program from 'commander';
+import fs from 'fs';
+import { join } from 'path';
+import { setGitHubStatus, createGitHubComment, createGitHubRelease } from '.';
+import { outputBanner } from './utils';
+
+const { version } = JSON.parse(
+  fs.readFileSync(join(__dirname, '../package.json'), 'utf8'),
+);
 
 program.version(version, '-v, --version');
 
@@ -58,7 +59,7 @@ program
   .option(
     '--target [target]',
     'Target commitish; defaults to "master"',
-    null,
+    undefined,
     'master',
   )
   .action(cmd => {
