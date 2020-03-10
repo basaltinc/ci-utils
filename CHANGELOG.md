@@ -1,3 +1,13 @@
+## [0.6.1](https://github.com/basaltinc/ci-utils/compare/v0.6.0...v0.6.1) (2020-03-10)
+
+
+### Bug Fixes
+
+* adjust ci to only run 1 node run ([b29048d](https://github.com/basaltinc/ci-utils/commit/b29048dbfc98c3362bb482d5ed1bcc1270432dab))
+* bump node requirements from 8,10 to 10,12 ([#13](https://github.com/basaltinc/ci-utils/issues/13)) ([25a24c5](https://github.com/basaltinc/ci-utils/commit/25a24c5867bbfd5fd9e24fa2942799dbbc460c54))
+* ci adjust git hooks ([0ff6484](https://github.com/basaltinc/ci-utils/commit/0ff648433f3e12f766388bad2e6ae6302dc93d7a))
+* ci releases ([155cbfd](https://github.com/basaltinc/ci-utils/commit/155cbfd61b504ee92790bd01fcc5adbc93607432))
+
 # [0.5.0](https://github.com/basaltinc/ci-utils/compare/v0.4.1...v0.5.0) (2018-12-21)
 
 
