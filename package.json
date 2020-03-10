@@ -16,7 +16,8 @@
     "_watch:js": "yarn _build:js --watch",
     "_watch:types": "yarn _build:types --watch --preserveWatchOutput --pretty",
     "build": "NODE_ENV=production run-s _clean _build:js _build:js",
-    "start": "run-p _watch:*"
+    "start": "run-p _watch:*",
+    "test": "run-s _test:lint"
   },
   "keywords": [
     "ci"
@@ -62,5 +63,8 @@
   },
   "files": [
     "./dist"
-  ]
+  ],
+  "engines": {
+    "node": "> 10.0.0"
+  }
 }
