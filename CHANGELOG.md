@@ -1,3 +1,10 @@
+## [0.7.1](https://github.com/basaltinc/ci-utils/compare/v0.7.0...v0.7.1) (2020-03-10)
+
+
+### Bug Fixes
+
+* set correct npm files dist ([7472509](https://github.com/basaltinc/ci-utils/commit/7472509c908ab760127ba458d14925d1e009c651))
+
 # [0.7.0](https://github.com/basaltinc/ci-utils/compare/v0.6.1...v0.7.0) (2020-03-10)
 
 
