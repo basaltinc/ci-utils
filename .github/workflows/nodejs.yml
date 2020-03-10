@@ -4,6 +4,9 @@
 name: Node.js CI
 
 on: [push]
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  REPO_SLUG: basaltinc/ci-utils
 
 jobs:
   build:
@@ -29,5 +32,4 @@ jobs:
         npm test
         node cli.js gh-status --url http://example.com -s success -c ci-utils/lint -d 'lint ok'
         node cli.js gh-status --url http://example.com -s success -c ci-utils/status -d 'body text'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+     
