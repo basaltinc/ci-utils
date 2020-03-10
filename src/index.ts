@@ -1,11 +1,6 @@
-const http = require('https');
-const {
-  getGitSha,
-  outputBanner,
-  runAndReturn,
-  runAndShow,
-} = require('./utils');
-const { getConfigFromEnv } = require('./config');
+import http from 'https';
+import { getGitSha } from './utils';
+import { getConfigFromEnv } from './config';
 
 const { repoSlug, GITHUB_TOKEN } = getConfigFromEnv();
 
@@ -14,14 +9,10 @@ if (!repoSlug) {
   process.exit(1);
 }
 
-/**
- * @param {string} path
- * @param {Object} requestBody
- * @return {Promise<any>}
- */
-function githubPost(path, requestBody) {
+export function githubPost(path: string, requestBody: {}): Promise<any> {
   // eslint-disable-next-line
-  return new Promise((resolve, reject) => {// @todo implement `reject()`
+  return new Promise((resolve, reject) => {
+    // @todo implement `reject()`
     const options = {
       method: 'POST',
       hostname: 'api.github.com',
@@ -36,7 +27,7 @@ function githubPost(path, requestBody) {
     };
 
     const req = http.request(options, res => {
-      const chunks = [];
+      const chunks: any[] = [];
 
       res.on('data', chunk => {
         chunks.push(chunk);
@@ -56,15 +47,20 @@ function githubPost(path, requestBody) {
 
 /**
  * Sets GitHub commit for last commit to that status. PR's show last commit's status.
- * @param {Object} opt
- * @param {string} opt.state - one of: error, failure, pending, or success
- * @param {string} opt.url
- * @param {string} opt.context - unique id of status source
- * @param {string} opt.description - no links
- * @returns {Promise<Object>}
  * @link https://developer.github.com/v3/repos/statuses/
  */
-function setGitHubStatus({ state, url, context, description }) {
+export function setGitHubStatus({
+  state,
+  url,
+  context,
+  description,
+}: {
+  state: 'error' | 'failure' | 'pending' | 'success';
+  url: string;
+  /** unique id of status source */
+  context: string;
+  description: string;
+}): Promise<any> {
   return githubPost(`/repos/${repoSlug}/statuses/${getGitSha()}`, {
     state,
     target_url: url,
@@ -75,12 +71,13 @@ function setGitHubStatus({ state, url, context, description }) {
 
 /**
  * Add comment to GitHub issue/pr
- * @param {string} comment - body, markdown ok
- * @param {number} issueId
- * @return {Promise<Object>}
  * @link https://developer.github.com/v3/issues/comments/#create-a-comment
  */
-function createGitHubComment(comment, issueId) {
+export function createGitHubComment(
+  /** body, markdown ok */
+  comment: string,
+  issueId: number,
+): Promise<any> {
   return githubPost(`/repos/${repoSlug}/issues/${issueId}/comments`, {
     body: comment,
   });
@@ -88,13 +85,17 @@ function createGitHubComment(comment, issueId) {
 
 /**
  * Create GitHub release from tag
- * @param {string} tag
- * @param {string} body
- * @param {string} [target='master']
- * @return {Promise<any>}
  * @link https://developer.github.com/v3/repos/releases/#create-a-release
  */
-function createGitHubRelease({ tag, body, target = 'master' }) {
+export function createGitHubRelease({
+  tag,
+  body,
+  target = 'master',
+}: {
+  tag: string;
+  body: string;
+  target?: string;
+}): Promise<any> {
   return githubPost(`/repos/${repoSlug}/releases`, {
     tag_name: tag,
     target_commitish: target,
@@ -104,13 +105,3 @@ function createGitHubRelease({ tag, body, target = 'master' }) {
     prerelease: false,
   });
 }
-
-module.exports = {
-  setGitHubStatus,
-  createGitHubComment,
-  createGitHubRelease,
-  outputBanner,
-  runAndReturn,
-  runAndShow,
-  getGitSha,
-};

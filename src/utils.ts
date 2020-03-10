@@ -1,17 +1,20 @@
-const { execSync, exec } = require('child_process');
-const qs = require('querystring');
-const http = require('http');
+import { execSync, exec } from 'child_process';
+import qs from 'querystring';
+import http from 'http';
 
-/**
- * @param {Object} opt
- * @param {string} opt.path
- * @param {Object} opt.requestBody
- * @param {string} opt.hostname
- * @param {string} opt.TOKEN
- * @param {Object} [opt.query]
- * @return {Promise<any>}
- */
-function post({ path, requestBody, query, TOKEN }) {
+export function post({
+  path,
+  hostname,
+  requestBody,
+  query,
+  TOKEN,
+}: {
+  hostname: string;
+  path: string;
+  requestBody: {};
+  query?: {};
+  TOKEN: string;
+}): Promise<Record<string, any>> {
   return new Promise((resolve, reject) => {
     const options = {
       method: 'POST',
@@ -25,7 +28,7 @@ function post({ path, requestBody, query, TOKEN }) {
     };
 
     const req = http.request(options, res => {
-      const chunks = [];
+      const chunks: any[] = [];
 
       res.on('data', chunk => {
         chunks.push(chunk);
@@ -43,15 +46,17 @@ function post({ path, requestBody, query, TOKEN }) {
   });
 }
 
-/**
- * @param {Object} opt
- * @param {string} opt.path
- * @param {string} opt.hostname
- * @param {string} opt.TOKEN
- * @param {Object} [opt.query]
- * @return {Promise<any>}
- */
-function get({ path, query, hostname, TOKEN }) {
+export function get({
+  path,
+  query,
+  hostname,
+  TOKEN,
+}: {
+  hostname: string;
+  path: string;
+  query?: {};
+  TOKEN: string;
+}) {
   return new Promise((resolve, reject) => {
     const options = {
       method: 'GET',
@@ -64,7 +69,7 @@ function get({ path, query, hostname, TOKEN }) {
       },
     };
     const req = http.request(options, res => {
-      const chunks = [];
+      const chunks: any[] = [];
 
       res.on('data', chunk => {
         chunks.push(chunk);
@@ -82,10 +87,8 @@ function get({ path, query, hostname, TOKEN }) {
 
 /**
  * Output banner of text in cli; useful for helping with CI log readability
- * @param {string} text
- * @return {void}
  */
-function outputBanner(text) {
+export function outputBanner(text: string): void {
   console.log(`
 
 |======================
@@ -98,10 +101,12 @@ function outputBanner(text) {
 
 /**
  * Exec command sync and return output w/o showing.
- * @param {string} cmd - Shell command to run
- * @returns {string} - stdout results
+ * @returns stdout results
  */
-function runAndReturn(cmd) {
+export function runAndReturn(
+  /** Shell command to run */
+  cmd: string,
+): string {
   try {
     return execSync(cmd, {
       encoding: 'utf8',
@@ -114,24 +119,30 @@ function runAndReturn(cmd) {
 
 /**
  * Run command async and stream output
- * @param {string} cmd - Shell command to run
- * @param {boolean} [banner=false] - should show banner at beginning and end of command output
- * @return {Promise<string>} - Output of command
  */
-function runAndShow(cmd, banner = false) {
+export function runAndShow(
+  /** Shell command to run */
+  cmd: string,
+  /** should show banner at beginning and end of command output */
+  banner = false,
+): Promise<string> {
   return new Promise((resolve, reject) => {
     if (banner) outputBanner(`Running "${cmd}"`);
     const child = exec(cmd, {
       encoding: 'utf8',
     });
     let stdout = '';
-    child.stdout.on('data', data => {
-      stdout += data;
-      process.stdout.write(data);
-    });
-    child.stderr.on('data', data => {
-      process.stdout.write(data);
-    });
+    if (child.stdout) {
+      child.stdout.on('data', data => {
+        stdout += data;
+        process.stdout.write(data);
+      });
+    }
+    if (child.stderr) {
+      child.stderr.on('data', data => {
+        process.stdout.write(data);
+      });
+    }
     child.on('close', code => {
       if (code > 0) {
         process.stdout.write(
@@ -148,37 +159,37 @@ function runAndShow(cmd, banner = false) {
 }
 
 /**
- * @param {boolean} [short=false] - Return the shorter 6 character or full 40 character git sha
- * @returns {string} - Git SHA of HEAD
+ * @returns Git SHA of HEAD
  */
-function getGitSha(short = false) {
+export function getGitSha(
+  /** Return the shorter 6 character or full 40 character git sha */
+  short = false,
+): string {
   if (short) {
     return runAndReturn('git rev-parse --short HEAD');
   }
   return runAndReturn('git rev-parse HEAD');
 }
 
-/**
- * @param {string} changelog - markdown string from a CHANGELOG
- * @param {string} repoSlug
- * @returns {{ issues: number[] }}
- */
-function parseChangelog(changelog, repoSlug) {
+export function parseChangelog(
+  changelog: string,
+  repoSlug: string,
+): { issues: number[] } {
   const [, ...others] = changelog.split(`${repoSlug}/issues/`);
-  const issueResults = new Set(
-    others.map(item => parseInt(item.match(/^\d*/)[0], 10)),
-  );
+  if (!others) {
+    return {
+      issues: [],
+    };
+  }
+  const issueResults = new Set<number>();
+  others.forEach(item => {
+    const matches = item.match(/^\d*/);
+    if (matches) {
+      const match = matches.length > 0 ? matches[0] : null;
+      if (match) issueResults.add(parseInt(match, 10));
+    }
+  });
   return {
     issues: [...issueResults],
   };
 }
-
-module.exports = {
-  runAndReturn,
-  runAndShow,
-  getGitSha,
-  parseChangelog,
-  outputBanner,
-  get,
-  post,
-};
