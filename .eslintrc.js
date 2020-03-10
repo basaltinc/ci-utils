@@ -7,10 +7,9 @@ module.exports = {
   extends: [
     'airbnb',
     'prettier',
-    // 'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended',
     //    "plugin:promise/recommended" @todo turn this back and .then() fix every error
   ],
-
   globals: {
     document: true,
     window: true,
@@ -33,7 +32,7 @@ module.exports = {
     {
       // enable the rule specifically for TypeScript files
       files: ['*.ts', '*.tsx'],
-      extends: ['plugin:@typescript-eslint/recommended'],
+      // extends: 'plugin:@typescript-eslint/recommended',
       rules: {
         '@typescript-eslint/camelcase': [0],
         '@typescript-eslint/explicit-function-return-type': [0],

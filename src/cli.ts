@@ -2,7 +2,12 @@
 import program from 'commander';
 import fs from 'fs';
 import { join } from 'path';
-import { setGitHubStatus, createGitHubComment, createGitHubRelease } from '.';
+import {
+  setGitHubStatus,
+  createGitHubComment,
+  createGitHubRelease,
+  createGitHubDeployment,
+} from './github';
 import { outputBanner } from './utils';
 
 const { version } = JSON.parse(
@@ -66,6 +71,42 @@ program
     const { tag, body, target } = cmd;
     return createGitHubRelease({ tag, body, target }).then(results => {
       console.log(`GitHub release made: ${results.html_url}`);
+      return true;
+    });
+  });
+
+program
+  .command('gh-deploy')
+  .description('Sets GitHub deployment for last commit.')
+  // .option(
+  //   '--state [state]',
+  //   'State [pending|error|failure|success]',
+  //   /^(pending|error|failure|success)$/i,
+  //   'success',
+  // )
+  .option('-u, --url [url]', 'Url')
+  .option('--log-url <logUrl>', 'Log Url')
+  .option('--env [env]', 'Environment', undefined, 'production')
+  .option('-d, --description <description>', 'Description')
+  .option('--prod', 'Is Production Environment')
+  .action(cmd => {
+    const { logUrl, url, env, description, prod: isProd } = cmd;
+    // console.log({
+    //   logUrl,
+    //   url,
+    //   env,
+    //   description,
+    //   isProd,
+    // });
+    // return;
+    return createGitHubDeployment({
+      url,
+      logUrl,
+      environment: env,
+      description,
+      isProdEnv: isProd,
+    }).then(() => {
+      console.log(`GitHub deployment set`);
       return true;
     });
   });
