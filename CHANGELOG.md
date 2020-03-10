@@ -1,3 +1,10 @@
+# [0.7.0](https://github.com/basaltinc/ci-utils/compare/v0.6.1...v0.7.0) (2020-03-10)
+
+
+### Features
+
+* add github deployments command ([39c7d86](https://github.com/basaltinc/ci-utils/commit/39c7d86b5ebe49a6228cbbf1336bb6e4616f23b7))
+
 ## [0.6.1](https://github.com/basaltinc/ci-utils/compare/v0.6.0...v0.6.1) (2020-03-10)
 
 
