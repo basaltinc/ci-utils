@@ -32,7 +32,7 @@ jobs:
           node ./dist/cli.js gh-status --url http://example.com -s success -c ci-utils/lint -d 'lint ok'
           node ./dist/cli.js gh-status --url http://example.com -s success -c ci-utils/status -d 'body text'
       - name: Release
-        if: github.ref == 'master'
+        #if: github.ref == 'master'
         run: |
           echo "The branch is ${{ github.ref }}"
           npx semantic-release
