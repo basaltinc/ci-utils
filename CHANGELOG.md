@@ -1,3 +1,10 @@
+## [0.7.2](https://github.com/basaltinc/ci-utils/compare/v0.7.1...v0.7.2) (2020-03-12)
+
+
+### Bug Fixes
+
+* add github deploy env flags ([870f3a9](https://github.com/basaltinc/ci-utils/commit/870f3a916e7cfc5f36660170f2ee6e6bfcc3caf7))
+
 ## [0.7.1](https://github.com/basaltinc/ci-utils/compare/v0.7.0...v0.7.1) (2020-03-10)
 
 
