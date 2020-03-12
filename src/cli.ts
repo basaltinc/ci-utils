@@ -89,15 +89,27 @@ program
   .option('--env [env]', 'Environment', undefined, 'production')
   .option('-d, --description <description>', 'Description')
   .option('--prod', 'Is Production Environment')
+  .option(
+    '--not-transient-env',
+    'Is this not a transient environment (i.e. will it exist in future after this specific deployment is gone?)',
+  )
   .action(cmd => {
-    const { logUrl, url, env, description, prod: isProd } = cmd;
-    // console.log({
-    //   logUrl,
-    //   url,
-    //   env,
-    //   description,
-    //   isProd,
-    // });
+    const {
+      logUrl,
+      url,
+      env,
+      description,
+      prod: isProd,
+      notTransientEnv,
+    } = cmd;
+    console.log({
+      logUrl,
+      url,
+      env,
+      description,
+      isProd,
+      notTransientEnv,
+    });
     // return;
     return createGitHubDeployment({
       url,
@@ -105,6 +117,7 @@ program
       environment: env,
       description,
       isProdEnv: isProd,
+      isTransientEnv: !notTransientEnv,
     }).then(() => {
       console.log(`GitHub deployment set`);
       return true;

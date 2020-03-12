@@ -129,6 +129,13 @@ export async function createGitHubDeployment({
   // https://developer.github.com/v3/repos/deployments/#create-a-deployment
   const ghDeployRes: {
     id: number;
+    transient_environment: boolean;
+    production_environment: boolean;
+    statuses_url: string;
+    environment: string;
+    original_environment: string;
+    task: string;
+    creator: {}; // actually contains whole GitHub user who made it
   } = await githubPost(`/repos/${repoSlug}/deployments`, {
     ref,
     auto_merge: false,
@@ -142,6 +149,10 @@ export async function createGitHubDeployment({
     console.log(`Error when creating GitHub deployment`);
     throw new Error(err);
   });
+  const { creator, ...rest } = ghDeployRes;
+  console.log('GitHub deployment made -----');
+  console.log(rest);
+  console.log('============');
 
   // https://developer.github.com/v3/repos/deployments/#create-a-deployment-status
   const deployStatusResults = await githubPost(
