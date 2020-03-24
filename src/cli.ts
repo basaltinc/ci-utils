@@ -32,12 +32,27 @@ program
   .option('-d, --description [description]', 'Description')
   .action(cmd => {
     const { state, url, context, description } = cmd;
+    if (!url) {
+      console.log('URL (--url) must be passed in ', { url });
+      process.exit(1);
+    }
     return setGitHubStatus({
       state,
       url,
       context,
       description,
     }).then(results => {
+      if (results.errors) {
+        console.log(results.errors);
+        process.exit(1);
+      }
+      const isStateSame = state === results.state;
+      const isUrlSame = url === results.target_url;
+      const isOk = isStateSame && isUrlSame && !!results.state;
+      if (!isOk) {
+        console.log({ isStateSame, isUrlSame, isOk }, results);
+        process.exit(1);
+      }
       console.log(`GitHub status set to: ${results.state}`);
       return true;
     });
@@ -102,15 +117,7 @@ program
       prod: isProd,
       notTransientEnv,
     } = cmd;
-    console.log({
-      logUrl,
-      url,
-      env,
-      description,
-      isProd,
-      notTransientEnv,
-    });
-    // return;
+
     return createGitHubDeployment({
       url,
       logUrl,

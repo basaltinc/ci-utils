@@ -60,7 +60,6 @@ export function getLatestDeploy({
               new Date(a.created).getTime() + new Date(b.created).getTime()
             );
           });
-
           const [deployment] = theseDeploys;
 
           if (deployment && deployment.url) {

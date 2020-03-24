@@ -64,7 +64,13 @@ export function setGitHubStatus({
   /** unique id of status source */
   context: string;
   description: string;
-}): Promise<any> {
+}): Promise<{
+  state: string;
+  target_url: string;
+  errors?: {
+    message: string;
+  }[];
+}> {
   return githubPost(`/repos/${repoSlug}/statuses/${getGitSha()}`, {
     state,
     target_url: url,
