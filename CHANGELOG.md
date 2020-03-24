@@ -1,3 +1,10 @@
+## [0.8.1](https://github.com/basaltinc/ci-utils/compare/v0.8.0...v0.8.1) (2020-03-24)
+
+
+### Bug Fixes
+
+* error handling on github status ([8876eaf](https://github.com/basaltinc/ci-utils/commit/8876eafa49330f86d8b28be87bca9f454679b06b))
+
 # [0.8.0](https://github.com/basaltinc/ci-utils/compare/v0.7.2...v0.8.0) (2020-03-20)
 
 
