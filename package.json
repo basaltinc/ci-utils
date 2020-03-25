@@ -1,6 +1,6 @@
 {
   "name": "ci-utils",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "description": "Utils for helping with CI",
   "bin": {
     "ci-utils": "dist/cli.js",

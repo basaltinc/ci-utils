@@ -1,3 +1,10 @@
+## [0.8.2](https://github.com/basaltinc/ci-utils/compare/v0.8.1...v0.8.2) (2020-03-25)
+
+
+### Bug Fixes
+
+* gh-status url can optionally include protocol ([713c7af](https://github.com/basaltinc/ci-utils/commit/713c7af879e084d93738d307b8ed721246d27059))
+
 ## [0.8.1](https://github.com/basaltinc/ci-utils/compare/v0.8.0...v0.8.1) (2020-03-24)
 
 
