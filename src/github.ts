@@ -73,7 +73,7 @@ export function setGitHubStatus({
 }> {
   return githubPost(`/repos/${repoSlug}/statuses/${getGitSha()}`, {
     state,
-    target_url: url,
+    target_url: url && !url.startsWith('http') ? `https://${url}` : url,
     context,
     description,
   });
