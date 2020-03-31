@@ -1,3 +1,10 @@
+## [0.8.3](https://github.com/basaltinc/ci-utils/compare/v0.8.2...v0.8.3) (2020-03-31)
+
+
+### Bug Fixes
+
+* handle urls w no protocol ([b038f84](https://github.com/basaltinc/ci-utils/commit/b038f8450b8453c7a9b99052a8d087490ab1528b))
+
 ## [0.8.2](https://github.com/basaltinc/ci-utils/compare/v0.8.1...v0.8.2) (2020-03-25)
 
 
