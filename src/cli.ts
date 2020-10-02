@@ -48,7 +48,8 @@ program
         process.exit(1);
       }
       const isStateSame = state === results.state;
-      const isUrlSame = url === results.target_url;
+      const theUrl = !url.startsWith('http') ? `https://${url}` : url;
+      const isUrlSame = theUrl === results.target_url;
       const isOk = isStateSame && isUrlSame && !!results.state;
       if (!isOk) {
         console.log({ isStateSame, isUrlSame, isOk }, results);
