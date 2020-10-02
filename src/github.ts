@@ -1,4 +1,5 @@
 import http from 'https';
+import { Octokit } from '@octokit/rest';
 import { getGitSha } from './utils';
 import { getConfigFromEnv } from './config';
 
@@ -8,6 +9,12 @@ if (!repoSlug) {
   console.log('Error: no repo slug found; please set via "REPO_SLUG" env var.');
   process.exit(1);
 }
+
+const [owner, repo] = repoSlug.split('/');
+
+const gh = new Octokit({
+  auth: GITHUB_TOKEN,
+});
 
 export function githubPost(path: string, requestBody: {}): Promise<any> {
   // eslint-disable-next-line
@@ -30,10 +37,10 @@ export function githubPost(path: string, requestBody: {}): Promise<any> {
       },
     };
 
-    const req = http.request(options, res => {
+    const req = http.request(options, (res) => {
       const chunks: any[] = [];
 
-      res.on('data', chunk => {
+      res.on('data', (chunk) => {
         chunks.push(chunk);
       });
 
@@ -150,7 +157,7 @@ export async function createGitHubDeployment({
     environment,
     transient_environment: isTransientEnv, // default `false` - Specifies if the given environment is specific to the deployment and will no longer exist at some point in the future.
     production_environment: isProdEnv, // default `false` - Specifies if the given environment is one that end-users directly interact with
-  }).catch(err => {
+  }).catch((err) => {
     console.log(err);
     console.log(`Error when creating GitHub deployment`);
     throw new Error(err);
@@ -171,9 +178,57 @@ export async function createGitHubDeployment({
       environment_url: url,
       auto_inactive: false,
     },
-  ).catch(err => {
+  ).catch((err) => {
     console.log(err);
     console.log('Error when updating GitHub deployment status');
     throw new Error(err);
   });
+}
+
+export async function getRelatedPr({
+  gitSha,
+}: {
+  gitSha: string;
+}): Promise<
+  {
+    url: string;
+    number: number;
+    title: string;
+    branch: string;
+  }[]
+> {
+  const pullsRes = await gh.pulls.list({
+    owner,
+    repo,
+    state: 'open',
+  });
+
+  const prs = pullsRes.data.map((pr) => {
+    const {
+      html_url,
+      number,
+      title,
+      head: { ref: branch },
+    } = pr;
+    return { url: html_url, number, title, branch };
+  });
+
+  const relatedPrs = await Promise.all(
+    prs.map(async (pr) => {
+      const commits = await gh.pulls.listCommits({
+        pull_number: pr.number,
+        owner,
+        repo,
+      });
+      const prHasCommit = !!commits.data.find(
+        (commit) => commit.sha === gitSha,
+      );
+      return {
+        prHasCommit,
+        pr,
+      };
+    }),
+  ).then((rPrs) => rPrs.filter((pr) => pr.prHasCommit).map(({ pr }) => pr));
+
+  return relatedPrs;
 }

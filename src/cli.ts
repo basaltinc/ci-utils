@@ -7,6 +7,7 @@ import {
   createGitHubComment,
   createGitHubRelease,
   createGitHubDeployment,
+  getRelatedPr,
 } from './github';
 import { outputBanner } from './utils';
 
@@ -30,7 +31,7 @@ program
   .option('-u, --url <url>', 'Url')
   .option('-c, --context [context]', 'Context')
   .option('-d, --description [description]', 'Description')
-  .action(cmd => {
+  .action((cmd) => {
     const { state, url, context, description } = cmd;
     if (!url) {
       console.log('URL (--url) must be passed in ', { url });
@@ -41,7 +42,7 @@ program
       url,
       context,
       description,
-    }).then(results => {
+    }).then((results) => {
       if (results.errors) {
         console.log(results.errors);
         process.exit(1);
@@ -63,9 +64,9 @@ program
   .description('Add comment to GitHub issue/pr')
   .option('-c, --comment [comment]', 'Comment; markdown ok')
   .option('-i, --issue [issue]', 'GitHub issue/PR id number', parseInt)
-  .action(cmd => {
+  .action((cmd) => {
     const { comment, issue } = cmd;
-    return createGitHubComment(comment, issue).then(results => {
+    return createGitHubComment(comment, issue).then((results) => {
       console.log(`GitHub comment made: ${results.html_url}`);
       return true;
     });
@@ -82,9 +83,9 @@ program
     undefined,
     'master',
   )
-  .action(cmd => {
+  .action((cmd) => {
     const { tag, body, target } = cmd;
-    return createGitHubRelease({ tag, body, target }).then(results => {
+    return createGitHubRelease({ tag, body, target }).then((results) => {
       console.log(`GitHub release made: ${results.html_url}`);
       return true;
     });
@@ -108,7 +109,7 @@ program
     '--not-transient-env',
     'Is this not a transient environment (i.e. will it exist in future after this specific deployment is gone?)',
   )
-  .action(cmd => {
+  .action((cmd) => {
     const {
       logUrl,
       url,
@@ -132,10 +133,39 @@ program
   });
 
 program
+  .command('gh-related-pr')
+  .description('Gets GitHub PRs that this commit is on')
+  .option('-c, --commit-sha [sha]', 'Git Commit SHA')
+  .option(
+    '--all-prs',
+    'Should a comma separated list be returned with each PR found? Defaults to only returning first PR',
+  )
+  .action(({ commitSha, allPrs }) => {
+    if (!commitSha) {
+      console.log(`Must pass in a "--commit-sha 566ff87"`);
+      process.exit(1);
+    }
+
+    return getRelatedPr({
+      gitSha: commitSha,
+    }).then((prs) => {
+      if (prs.length === 0) {
+        process.stderr.write(`No related PRs found for commit ${commitSha}`);
+        return;
+      }
+      if (allPrs) {
+        process.stdout.write(prs.map(({ number }) => number).join(','));
+      } else {
+        process.stdout.write(prs[0].number.toString());
+      }
+    });
+  });
+
+program
   .command('banner <text>')
   .description(
     'Output banner of text in cli; useful for helping with CI log readability',
   )
-  .action(text => outputBanner(text));
+  .action((text) => outputBanner(text));
 
 program.parse(process.argv);
