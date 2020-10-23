@@ -1,3 +1,10 @@
+# [0.10.0](https://github.com/basaltinc/ci-utils/compare/v0.9.0...v0.10.0) (2020-10-23)
+
+
+### Features
+
+* add github pr to markdown ([508cf4a](https://github.com/basaltinc/ci-utils/commit/508cf4aef371e9b9c0d1052bd2aac1762e5364fe))
+
 # [0.9.0](https://github.com/basaltinc/ci-utils/compare/v0.8.3...v0.9.0) (2020-10-02)
 
 
