@@ -232,3 +232,26 @@ export async function getRelatedPr({
 
   return relatedPrs;
 }
+
+export async function getPrInfoAsMd({
+  number,
+  skipBody = false,
+}: {
+  number: number;
+  skipBody?: boolean;
+}): Promise<string> {
+  const pr = await gh.pulls.get({
+    owner,
+    repo,
+    pull_number: number,
+  });
+  const { html_url, title, body } = pr.data;
+  const lines: string[] = [`[PR ${number}: ${title}](${html_url})`];
+
+  if (body.length > 0 && !skipBody) {
+    lines.push('');
+    lines.push(body);
+  }
+
+  return lines.join('\n');
+}

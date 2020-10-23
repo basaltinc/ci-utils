@@ -8,6 +8,7 @@ import {
   createGitHubRelease,
   createGitHubDeployment,
   getRelatedPr,
+  getPrInfoAsMd,
 } from './github';
 import { outputBanner } from './utils';
 
@@ -159,6 +160,25 @@ program
       } else {
         process.stdout.write(prs[0].number.toString());
       }
+    });
+  });
+
+program
+  .command('gh-pr-info-md')
+  .description('Gets GitHub PR info as Markdown')
+  .option('-n, --number [number]', 'GitHub PR Number')
+  .option('--skip-body', 'Exclude body')
+  .action(({ number, skipBody }) => {
+    if (!number) {
+      console.log(`Must pass in a "--number 123"`);
+      process.exit(1);
+    }
+
+    return getPrInfoAsMd({
+      number,
+      skipBody,
+    }).then((md) => {
+      console.log(md);
     });
   });
 
